@@ -1,0 +1,39 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "analyze": "cross-env ANALYZE=true yarn build",
+    "serve": "serve .next/analyze"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@faker-js/faker": "^7.3.0",
+    "@monaco-editor/react": "^4.4.6",
+    "@next-auth/prisma-adapter": "^1.0.5",
+    "@next/bundle-analyzer": "^12.1.6",
+    "@prisma/client": "^4.4.0",
+    "@tanstack/react-query": "^4.10.3",
+    "axios": "^1.1.2",
+    "cross-env": "^7.0.3",
+    "lodash": "^4.17.21",
+    "monaco-editor": "^0.34.0",
+    "next": "latest",
+    "next-auth": "^4.13.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.37.0",
+    "theme-ui": "^0.15.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.186",
+    "@types/node": "^18.0.0",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "prettier": "^2.7.1",
+    "prisma": "^4.4.0",
+    "serve": "^13.0.2",
+    "typescript": "^4.7.4"
+  }
+}
