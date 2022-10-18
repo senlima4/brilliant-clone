@@ -1,6 +1,6 @@
 import * as React from "react"
 import dynamic from "next/dynamic"
-import { Box, Text } from "theme-ui"
+import { Box, Text } from "@chakra-ui/react"
 
 import { useTopics } from "@/api/hooks"
 

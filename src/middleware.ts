@@ -9,7 +9,7 @@ export const middleware = async (req: NextRequest) => {
     const jwt = await getToken({
       req,
     })
-    console.log(jwt)
+
     if (!jwt) {
       return NextResponse.redirect(new URL("/api/auth/signin", req.url))
     }

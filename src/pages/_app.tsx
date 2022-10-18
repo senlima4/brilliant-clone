@@ -1,11 +1,9 @@
 import * as React from "react"
-import { ThemeProvider } from "theme-ui"
+import { ChakraProvider } from "@chakra-ui/react"
 import { SessionProvider } from "next-auth/react"
 import { Hydrate, QueryClient, QueryClientProvider, DehydratedState } from "@tanstack/react-query"
 import type { AppProps } from "next/app"
 import type { Session } from "next-auth/index"
-
-import { theme } from "@/theme"
 
 const MyApp = ({
   Component,
@@ -17,9 +15,9 @@ const MyApp = ({
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <ThemeProvider theme={theme}>
+          <ChakraProvider>
             <Component {...pageProps} />
-          </ThemeProvider>
+          </ChakraProvider>
         </Hydrate>
       </QueryClientProvider>
     </SessionProvider>

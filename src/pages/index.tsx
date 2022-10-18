@@ -1,7 +1,6 @@
 import NextLink from "next/link"
-import { signIn, signOut } from "next-auth/react"
-import { useSession } from "next-auth/react"
-import { Box, Link, Button } from "theme-ui"
+import { Box, Link, Button } from "@chakra-ui/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 import type { NextPage } from "next"
 
 const Index: NextPage = () => {

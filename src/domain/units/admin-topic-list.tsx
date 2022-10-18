@@ -1,8 +1,8 @@
 import * as React from "react"
-import { Box, Text } from "theme-ui"
+import Link from "next/link"
+import { Box, Text } from "@chakra-ui/react"
 
 import { useTopicUnits } from "@/api/hooks"
-import Link from "next/link"
 
 type AdminTopicUnitListProps = {
   topicId: number

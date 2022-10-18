@@ -1,4 +1,4 @@
-import { Box, Heading, Spinner } from "theme-ui"
+import { Box, Heading, Spinner } from "@chakra-ui/react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { unstable_getServerSession } from "next-auth/next"

@@ -1,39 +1,51 @@
 import * as React from "react"
-import noop from "lodash/noop"
 import { useForm } from "react-hook-form"
-import { useMutation } from "@tanstack/react-query"
-import { Box, Text, Label, Field, Textarea, Select, Button } from "theme-ui"
+import { Box, FormLabel, FormControl, Input, Textarea, Select, Button } from "@chakra-ui/react"
 
-import { FETCHER } from "@/api/fetcher"
+import { useCreateCourse } from "@/api/hooks"
 import type { CreateCourseInput } from "@/api/types"
 
 type CourseCreatorProps = {
-  onSuccess?: () => void
   children?: React.ReactNode
 }
 
-const CourseEditor: React.FC<CourseCreatorProps> = ({ onSuccess = noop }) => {
-  const mutation = useMutation(FETCHER.createCourse)
+const CourseEditor: React.FC<CourseCreatorProps> = () => {
+  const mutation = useCreateCourse()
   const { register, handleSubmit } = useForm<CreateCourseInput>()
 
   const onSubmit = (data: CreateCourseInput) => {
-    mutation.mutate(data, { onSuccess })
+    mutation.mutate(data)
   }
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-      <Field label="Slug" {...register("slug")} />
-      <Field label="Name" {...register("name")} />
-      <Field label="Description" {...register("description")} as={Textarea} />
-      <Box>
-        <Label htmlFor="status">Status</Label>
+      <FormControl>
+        <FormLabel>Slug</FormLabel>
+        <Input {...register("slug")} />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel>Name</FormLabel>
+        <Input {...register("name")} />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel>Description</FormLabel>
+        <Textarea rows={3} {...register("description")} />
+      </FormControl>
+
+      <FormControl mb={2}>
+        <FormLabel htmlFor="status">Status</FormLabel>
         <Select {...register("status")}>
           <option value="DRAFT">Draft</option>
           <option value="LINK">Link Only</option>
           <option value="PUBLIC">Public</option>
         </Select>
-      </Box>
-      {mutation.status === "loading" ? <Text>Loading...</Text> : <Button type="submit">Create Course</Button>}
+      </FormControl>
+
+      <Button type="submit" isLoading={mutation.status === "loading"}>
+        Create Course
+      </Button>
     </Box>
   )
 }

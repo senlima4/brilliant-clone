@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
-import { Box, Text, Label, Field, Textarea, Select, Button } from "theme-ui"
+import { Box, FormLabel, FormControl, Input, Textarea, Select, Button } from "@chakra-ui/react"
 import type { Course } from "@prisma/client"
 
 import { useEditCourse } from "@/api/hooks"
@@ -23,18 +23,33 @@ const CourseEditor: React.FC<CourseEditorProps> = ({ defaultValues }) => {
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-      <Field label="Slug" {...register("slug")} />
-      <Field label="Name" {...register("name")} />
-      <Field label="Description" {...register("description")} as={Textarea} />
-      <Box>
-        <Label htmlFor="status">Status</Label>
+      <FormControl>
+        <FormLabel>Slug</FormLabel>
+        <Input {...register("slug")} />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel>Name</FormLabel>
+        <Input {...register("name")} />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel>Description</FormLabel>
+        <Textarea rows={3} {...register("description")} />
+      </FormControl>
+
+      <FormControl mb={2}>
+        <FormLabel htmlFor="status">Status</FormLabel>
         <Select {...register("status")}>
           <option value="DRAFT">Draft</option>
           <option value="LINK">Link Only</option>
           <option value="PUBLIC">Public</option>
         </Select>
-      </Box>
-      {mutation.status === "loading" ? <Text>Loading...</Text> : <Button type="submit">Edit Course</Button>}
+      </FormControl>
+
+      <Button type="submit" isLoading={mutation.status === "loading"}>
+        Update Course
+      </Button>
     </Box>
   )
 }

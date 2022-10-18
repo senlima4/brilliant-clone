@@ -1,7 +1,7 @@
 import * as React from "react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
-import { Box, Text } from "theme-ui"
+import { Box } from "@chakra-ui/react"
 
 import { useUnit } from "@/api/hooks"
 
@@ -18,7 +18,7 @@ const UnitPage = () => {
     component = (
       <Box>
         <UnitMetadataEditor defaultValues={data} />
-        <UnitContentEditor defaultValue={data.structure as string} />
+        <UnitContentEditor unitId={data.id} defaultValue={data.structure as string} />
       </Box>
     )
   }

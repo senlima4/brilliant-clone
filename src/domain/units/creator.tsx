@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
-import { Box, Field, Textarea, Button } from "theme-ui"
+import { Box, FormControl, Input, FormLabel, Textarea, Button } from "@chakra-ui/react"
 
 import { useCreateUnit } from "@/api/hooks"
 import type { CreateUnitInput } from "@/api/types"
@@ -15,15 +15,24 @@ const UnitCreator: React.FC<UnitEditorProps> = ({ topicId }) => {
   const { register, handleSubmit } = useForm<CreateUnitInput>()
 
   const onSubmit = (data: CreateUnitInput) => {
-    console.log(data)
     mutation.mutate({ topicId, ...data })
   }
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-      <Field label="Title" {...register("title")} />
-      <Field label="Description" {...register("description")} as={Textarea} />
-      {mutation.isLoading ? <Box>Loading...</Box> : <Button type="submit">Create</Button>}
+      <FormControl>
+        <FormLabel>Unit Title</FormLabel>
+        <Input {...register("title")} />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel>Description</FormLabel>
+        <Textarea rows={3} {...register("description")} />
+      </FormControl>
+
+      <Button type="submit" isLoading={mutation.isLoading}>
+        Create
+      </Button>
     </Box>
   )
 }
