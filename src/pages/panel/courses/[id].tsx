@@ -1,4 +1,4 @@
-import { Box, Heading, Spinner } from "@chakra-ui/react"
+import { Box, Button, Flex, Heading, Spinner } from "@chakra-ui/react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { unstable_getServerSession } from "next-auth/next"
@@ -7,9 +7,11 @@ import type { GetServerSidePropsContext } from "next"
 import { useCourse } from "@/api/hooks"
 import { checkCourseOwner } from "@/services/course"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
+import { SINGLETON_FUNCTION_SX } from "@/domain/panel/styles"
 
+const PanelLayout = dynamic(() => import("@/domain/panel/layout"), { ssr: false })
 const CourseEditor = dynamic(() => import("@/domain/courses/editor"), { ssr: false })
-const TopicCreator = dynamic(() => import("@/domain/topics/creator"), { ssr: false })
+const TopicCreatorPopup = dynamic(() => import("@/domain/topics/creator-popup"), { ssr: false })
 const TopicList = dynamic(() => import("@/domain/topics/admin-list"), { ssr: false })
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -49,25 +51,34 @@ const CoursePage = () => {
 
   if (status === "success") {
     component = (
-      <Box>
-        <Box>
-          <Heading>Edit Course</Heading>
+      <Flex>
+        <Box mr={12} flex="none" w="250px">
           <CourseEditor defaultValues={data} />
         </Box>
-        <Box>
-          <Heading>Create Topic</Heading>
-          <TopicCreator courseId={data.id} />
+        <Box flex="auto" w="100%">
+          <Flex mb={4} align="center" justifyContent="space-between">
+            <Heading size="md">Topics</Heading>
+
+            <TopicCreatorPopup courseId={data.id}>
+              <Button size="sm">Create Topic</Button>
+            </TopicCreatorPopup>
+          </Flex>
+
+          <TopicList courseId={data.id} showUnits />
         </Box>
-        <TopicList courseId={data.id} showUnits />
-      </Box>
+      </Flex>
     )
   }
 
   return (
-    <Box>
-      <Heading>Course</Heading>
-      <Box>{component}</Box>
-    </Box>
+    <PanelLayout>
+      <Box sx={SINGLETON_FUNCTION_SX}>
+        <Heading mb={2} size="lg" textAlign="left">
+          Course
+        </Heading>
+        {component}
+      </Box>
+    </PanelLayout>
   )
 }
 

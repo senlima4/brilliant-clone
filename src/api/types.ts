@@ -1,4 +1,15 @@
-import type { CourseStatus } from "@prisma/client"
+import type { CourseStatus, UnitStatus } from "@prisma/client"
+
+export type SerializedCourse = {
+  id: string
+  slug: string
+  name: string
+  description?: string | null
+  image?: string | null
+  status: CourseStatus
+  createdAt: string
+  updatedAt: string
+}
 
 export type CreateCourseInput = {
   slug: string
@@ -33,6 +44,7 @@ export type DeleteTopicInput = {
 export type CreateUnitInput = {
   topicId: number
   title: string
+  status?: UnitStatus
   description?: string
 }
 

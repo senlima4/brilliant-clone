@@ -1,11 +1,10 @@
 import * as React from "react"
 import dynamic from "next/dynamic"
-import { Box, Text } from "@chakra-ui/react"
+import { Box, Flex, Text, Center } from "@chakra-ui/react"
 
 import { useTopics } from "@/api/hooks"
 
 const AdminTopicUnitList = dynamic(() => import("@/domain/units/admin-topic-list"), { ssr: false })
-const UnitCreator = dynamic(() => import("@/domain/units/creator"), { ssr: false })
 
 type AdminTopicListProps = {
   courseId: string
@@ -20,13 +19,19 @@ const AdminTopicList: React.FC<AdminTopicListProps> = ({ courseId, showUnits = f
   if (status === "success") {
     component = (
       <Box>
-        {data?.map((topic) => (
-          <Box key={topic.id}>
-            <Text>{topic.name}</Text>
+        {data?.map((topic, idx) => (
+          <Box key={topic.id} mb={4}>
+            <Flex mb={4} align="center">
+              <Center flex="none" bg="teal.50" w="30px" h="30px" rounded="full" mr={2}>
+                <Text>{idx + 1}</Text>
+              </Center>
+              <Text flex="none" mr={2}>
+                {topic.name}
+              </Text>
+              <Box flex="auto" w="100%" h="1px" bg="black" />
+            </Flex>
             {showUnits && (
               <Box>
-                <Text>Creator unit</Text>
-                <UnitCreator topicId={topic.id} />
                 <AdminTopicUnitList topicId={topic.id} />
               </Box>
             )}

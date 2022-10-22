@@ -7,5 +7,5 @@ type UseUnitOptions = {
 }
 
 export const useUnit = ({ unitId }: UseUnitOptions) => {
-  return useQuery(["units", unitId], () => FETCHER.getUnit(unitId))
+  return useQuery(["units", unitId], () => FETCHER.getUnit(unitId), { enabled: typeof unitId === "string" })
 }

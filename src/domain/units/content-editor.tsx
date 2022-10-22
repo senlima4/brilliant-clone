@@ -1,9 +1,11 @@
 import * as React from "react"
-import { Button } from "@chakra-ui/react"
+import { Flex, Box, Text, Button } from "@chakra-ui/react"
 import Editor, { Monaco } from "@monaco-editor/react"
 import type { editor } from "monaco-editor"
 
 import { useEditUnit } from "@/api/hooks"
+
+import { EDITOR_THEME } from "./editor-theme"
 
 const DEFAULT_TEMPLATE = `
 your article content here...
@@ -18,7 +20,9 @@ const UnitContentEditor: React.FC<UnitContentEditorProps> = ({ unitId, defaultVa
   const mutation = useEditUnit()
   const monacoRef = React.useRef<editor.IStandaloneCodeEditor | null>(null)
 
-  function handleEditorWillMount(monaco: Monaco) {}
+  function handleEditorWillMount(monaco: Monaco) {
+    monaco.editor.defineTheme("dracula", EDITOR_THEME)
+  }
 
   function handleEditorDidMount(editor: editor.IStandaloneCodeEditor, monaco) {
     monacoRef.current = editor
@@ -31,16 +35,28 @@ const UnitContentEditor: React.FC<UnitContentEditorProps> = ({ unitId, defaultVa
   }
 
   return (
-    <>
-      <Button onClick={onSubmit}>Edit Content</Button>
-      <Editor
-        height="90vh"
-        defaultLanguage="markdown"
-        defaultValue={defaultValue}
-        beforeMount={handleEditorWillMount}
-        onMount={handleEditorDidMount}
-      />
-    </>
+    <Flex w="full" h="full" flexDir="column" border="1px">
+      <Box w="full" flex="none" h="40px" borderBottom="1px">
+        <Button variant="unstyled" h="100%" size="sm" onClick={onSubmit} borderRight="1px" rounded="none">
+          <Text px={4}>Save</Text>
+        </Button>
+      </Box>
+      <Box flex="auto" h="100%">
+        <Editor
+          theme="dracula"
+          defaultLanguage="markdown"
+          defaultValue={defaultValue}
+          beforeMount={handleEditorWillMount}
+          onMount={handleEditorDidMount}
+          options={{
+            readOnly: false,
+            minimap: {
+              enabled: false,
+            },
+          }}
+        />
+      </Box>
+    </Flex>
   )
 }
 

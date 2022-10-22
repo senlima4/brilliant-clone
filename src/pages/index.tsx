@@ -1,23 +1,17 @@
-import NextLink from "next/link"
-import { Box, Link, Button } from "@chakra-ui/react"
-import { signIn, signOut, useSession } from "next-auth/react"
+import dynamic from "next/dynamic"
+import { Box } from "@chakra-ui/react"
 import type { NextPage } from "next"
 
+const Navbar = dynamic(() => import("@/domain/landing/navbar"), {
+  ssr: false,
+})
+
 const Index: NextPage = () => {
-  const { status } = useSession()
   return (
     <Box>
-      <Box>
-        <Button onClick={() => signIn()}>Auth</Button>
+      <Box mx="auto" w="98%" maxW={{ base: "375px", md: "960px", lg: "1200px" }}>
+        <Navbar />
       </Box>
-      {status === "authenticated" && (
-        <Box>
-          <Button onClick={() => signOut()}>Logout</Button>
-        </Box>
-      )}
-      <NextLink href="/panel" passHref>
-        <Link>Panel</Link>
-      </NextLink>
     </Box>
   )
 }

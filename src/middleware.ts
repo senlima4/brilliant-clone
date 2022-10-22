@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt"
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-const OPEN_EDIT_ACCESS = ["ADMIN", "EDITOR"]
+import { OPEN_EDIT_ACCESS } from "@/constants"
 
 export const middleware = async (req: NextRequest) => {
   if (req.nextUrl.pathname.startsWith("/panel")) {

@@ -1,16 +1,18 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
-import { Box, FormControl, Input, FormLabel, Textarea, Button } from "@chakra-ui/react"
+import { Box, Flex, FormControl, Input, FormLabel, Textarea, Button } from "@chakra-ui/react"
 
 import { useCreateUnit } from "@/api/hooks"
 import type { CreateUnitInput } from "@/api/types"
 
 type UnitEditorProps = {
   topicId: number
+  cancelable?: boolean
+  onCancel?: () => void
   children?: React.ReactNode
 }
 
-const UnitCreator: React.FC<UnitEditorProps> = ({ topicId }) => {
+const UnitCreator: React.FC<UnitEditorProps> = ({ topicId, onCancel, cancelable }) => {
   const mutation = useCreateUnit()
   const { register, handleSubmit } = useForm<CreateUnitInput>()
 
@@ -18,21 +20,34 @@ const UnitCreator: React.FC<UnitEditorProps> = ({ topicId }) => {
     mutation.mutate({ topicId, ...data })
   }
 
+  const handleCancel = React.useCallback(() => {
+    if (onCancel) {
+      onCancel()
+    }
+  }, [onCancel])
+
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-      <FormControl>
-        <FormLabel>Unit Title</FormLabel>
-        <Input {...register("title")} />
+      <FormControl mb={1}>
+        <FormLabel>Title</FormLabel>
+        <Input size="sm" {...register("title")} />
       </FormControl>
 
-      <FormControl>
+      <FormControl mb={2}>
         <FormLabel>Description</FormLabel>
-        <Textarea rows={3} {...register("description")} />
+        <Textarea size="sm" rows={3} {...register("description")} />
       </FormControl>
 
-      <Button type="submit" isLoading={mutation.isLoading}>
-        Create
-      </Button>
+      <Flex w="full" align="center">
+        <Button flex={1} mr={2} size="sm" type="submit" isLoading={mutation.isLoading}>
+          Create
+        </Button>
+        {cancelable && (
+          <Button flex={1} size="sm" disabled={mutation.isLoading} onClick={handleCancel}>
+            Cancel
+          </Button>
+        )}
+      </Flex>
     </Box>
   )
 }

@@ -1,39 +1,27 @@
 import dynamic from "next/dynamic"
-import { useQueryClient } from "@tanstack/react-query"
-import { Box, Flex, Heading, ThemeUIStyleObject } from "@chakra-ui/react"
+import { Box, Heading } from "@chakra-ui/react"
 import type { NextPage } from "next"
-import type { Session } from "next-auth"
 
+const PanelLayout = dynamic(() => import("@/domain/panel/layout"), { ssr: false })
 const AdminCourseList = dynamic(() => import("@/domain/courses/admin-list"), { ssr: false })
-const CourseCreator = dynamic(() => import("@/domain/courses/creator"), { ssr: false })
 
-const CONTAINER_SX: ThemeUIStyleObject = {
-  width: "100vw",
-  height: "100vh",
+const COURSE_LIST_SX = {
+  my: 6,
+  width: "80%",
+  maxW: { base: "375px", sm: "600px", md: "960px", lg: "1200px" },
 }
 
-const COURSE_LIST_SX: ThemeUIStyleObject = {
-  flex: "none",
-  width: "300px",
-  borderRight: "1px solid",
-  padding: "0 1rem",
-}
-
-const COURSE_EDITOR_SX: ThemeUIStyleObject = {
-  flex: "auto",
-  width: "100%",
-}
-
-const PanelPage: NextPage<{ session: Session }> = () => {
+const PanelPage: NextPage = () => {
   return (
     <Box>
-      <Flex sx={CONTAINER_SX}>
-        <Box sx={COURSE_LIST_SX}>
-          <CourseCreator />
+      <PanelLayout>
+        <Box as="section" sx={COURSE_LIST_SX}>
+          <Heading mb={4} size="md">
+            Your Courses List
+          </Heading>
           <AdminCourseList />
         </Box>
-        <Box sx={COURSE_EDITOR_SX}></Box>
-      </Flex>
+      </PanelLayout>
     </Box>
   )
 }

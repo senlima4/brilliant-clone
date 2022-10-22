@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
-import { Box, FormLabel, FormControl, Input, Textarea, Select, Button } from "@chakra-ui/react"
+import { Box, Flex, FormLabel, FormControl, Input, Textarea, Select, Button } from "@chakra-ui/react"
 
 import { useCreateCourse } from "@/api/hooks"
 import type { CreateCourseInput } from "@/api/types"
@@ -19,24 +19,30 @@ const CourseEditor: React.FC<CourseCreatorProps> = () => {
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-      <FormControl>
-        <FormLabel>Slug</FormLabel>
-        <Input {...register("slug")} />
-      </FormControl>
-
-      <FormControl>
-        <FormLabel>Name</FormLabel>
-        <Input {...register("name")} />
-      </FormControl>
-
-      <FormControl>
-        <FormLabel>Description</FormLabel>
-        <Textarea rows={3} {...register("description")} />
+      <FormControl mb={2}>
+        <FormLabel w="80px" flex="none">
+          Slug
+        </FormLabel>
+        <Input size="sm" {...register("slug")} />
       </FormControl>
 
       <FormControl mb={2}>
-        <FormLabel htmlFor="status">Status</FormLabel>
-        <Select {...register("status")}>
+        <FormLabel w="80px" flex="none">
+          Name
+        </FormLabel>
+        <Input size="sm" {...register("name")} />
+      </FormControl>
+
+      <FormControl mb={2}>
+        <FormLabel>Description</FormLabel>
+        <Textarea size="sm" rows={3} {...register("description")} />
+      </FormControl>
+
+      <FormControl mb={4}>
+        <FormLabel htmlFor="status" w="80px" flex="none">
+          Status
+        </FormLabel>
+        <Select size="sm" {...register("status")}>
           <option value="DRAFT">Draft</option>
           <option value="LINK">Link Only</option>
           <option value="PUBLIC">Public</option>

@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
 import { FETCHER } from "@/api/fetcher"
 import { useSession } from "./use-session"

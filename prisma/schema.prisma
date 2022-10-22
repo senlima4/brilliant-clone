@@ -68,6 +68,11 @@ enum CourseStatus {
   DRAFT
 }
 
+enum UnitStatus {
+  PUBLIC
+  DRAFT
+}
+
 model Course {
   id          String   @id @default(cuid())
   slug        String   @unique
@@ -92,12 +97,13 @@ model Topic {
 }
 
 model Unit {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   title       String
+  status      UnitStatus  @default(DRAFT)
   description String?
   structure   String?
-  topic       Topic    @relation(fields: [topicId], references: [id])
+  topic       Topic       @relation(fields: [topicId], references: [id])
   topicId     Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }

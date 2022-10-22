@@ -5,7 +5,7 @@ import { Box, FormControl, Input, FormLabel, Textarea, Button } from "@chakra-ui
 import { useCreateTopic } from "@/api/hooks"
 import { CreateTopicInput } from "@/api/types"
 
-type TopicCreatorProps = {
+export type TopicCreatorProps = {
   courseId: string
 }
 
@@ -19,18 +19,18 @@ const TopicCreator: React.FC<TopicCreatorProps> = ({ courseId }) => {
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-      <FormControl>
-        <FormLabel>Topic Name</FormLabel>
-        <Input {...register("name")} />
+      <FormControl mb={2}>
+        <FormLabel>Name</FormLabel>
+        <Input size="sm" {...register("name")} />
       </FormControl>
 
-      <FormControl>
+      <FormControl mb={2}>
         <FormLabel>Description</FormLabel>
-        <Textarea rows={3} {...register("description")} />
+        <Input size="sm" {...register("description")} />
       </FormControl>
 
-      <Button type="submit" isLoading={mutation.isLoading}>
-        Create
+      <Button size="sm" type="submit" isLoading={mutation.isLoading}>
+        Submit
       </Button>
     </Box>
   )

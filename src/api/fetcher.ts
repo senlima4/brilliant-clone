@@ -2,6 +2,7 @@ import type { Course, Topic, Unit } from "@prisma/client"
 
 import API from "./instance"
 import type {
+  SerializedCourse,
   CreateCourseInput,
   UpdateCourseInput,
   DeleteCourseInput,
@@ -16,25 +17,25 @@ import type {
 const COURSE_FETCHER = {
   getCourses: async () => {
     const { data } = await API.get("/courses")
-    return data as Course[]
+    return data as SerializedCourse[]
   },
   getCourse: async (courseId: string) => {
     const { data } = await API.get(`/courses/${courseId}`)
-    return data as Course
+    return data as SerializedCourse
   },
   createCourse: async (input: CreateCourseInput) => {
     const { data } = await API.post("/courses", input)
-    return data as Course
+    return data as SerializedCourse
   },
   updateCourse: async (input: UpdateCourseInput) => {
     const { courseId } = input
     const { data } = await API.put(`/courses/${courseId}`, input)
-    return data as Course
+    return data as SerializedCourse
   },
   deleteCourse: async (input: DeleteCourseInput) => {
     const { courseId } = input
     const { data } = await API.delete(`/courses/${courseId}`)
-    return data as Course
+    return data as SerializedCourse
   },
 }
 

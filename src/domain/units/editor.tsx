@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
-import { Box, FormControl, Input, FormLabel, Textarea, Button } from "@chakra-ui/react"
+import { Box, Flex, FormControl, Select, Input, FormLabel, Textarea, Button } from "@chakra-ui/react"
 import type { Unit } from "@prisma/client"
 
 import { useEditUnit } from "@/api/hooks"
@@ -23,18 +23,29 @@ const UnitEditor: React.FC<UnitEditorProps> = ({ defaultValues }) => {
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-      <FormControl>
-        <FormLabel>Unit Title</FormLabel>
-        <Input {...register("title")} />
+      <FormControl mb={2}>
+        <FormLabel>Title</FormLabel>
+        <Input {...register("title", { required: true })} />
       </FormControl>
-      <FormControl>
+
+      <FormControl mb={2}>
         <FormLabel>Description</FormLabel>
         <Textarea rows={3} {...register("description")} />
       </FormControl>
 
-      <Button type="submit" isLoading={mutation.isLoading}>
-        Update Unit
-      </Button>
+      <FormControl mb={4}>
+        <FormLabel htmlFor="status">Status</FormLabel>
+        <Select {...register("status")}>
+          <option value="DRAFT">Draft</option>
+          <option value="PUBLIC">Public</option>
+        </Select>
+      </FormControl>
+
+      <Flex w="full">
+        <Button ml="auto" size="sm" type="submit" isLoading={mutation.isLoading}>
+          Update
+        </Button>
+      </Flex>
     </Box>
   )
 }
