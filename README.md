@@ -6,13 +6,13 @@ It just bunch of boring CRUD. Just find some little time to write it. Not really
 
 ## Stack
 
-nextjs
-prisma
-next-auth
-typescript
-react-query
-chakra-ui
-monaco-editor
+- nextjs
+- prisma
+- next-auth
+- typescript
+- react-query
+- chakra-ui
+- monaco-editor
 
 ## Structure
 
