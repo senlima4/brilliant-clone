@@ -16,6 +16,7 @@ monaco-editor
 
 ## Structure
 
+```
 +- src/
 +-+- api/ - client api caller
 +-+-+-+- hooks/ - react query hooks
@@ -28,6 +29,7 @@ monaco-editor
 +-+- services/ - service for api implementation
 +-+- constants.ts - share constants
 +-+- middleware.ts - nextjs middleware
+```
 
 ## Setup
 
